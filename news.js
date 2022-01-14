@@ -4,7 +4,7 @@ const commander = require('commander')
 const chalk = require('chalk')
 const clear = require('clear')
 const prompt = require('prompt')
-const open = require('open')
+const TinyURL = require('tinyurl');
 const striptags = require('striptags')
 const NewsAPI = require('newsapi')
 const newsapi = new NewsAPI(config.id)
@@ -17,7 +17,7 @@ const main = async () => {
     const isLanguageOk = (language) => {
       return language
     }
-    const langs = ['ar', 'de', 'en', 'es', 'fr', 'he', 'it', 'nl', 'no', 'pt', 'ru', 'se', 'ud', 'zh']
+    const langs = config.languages
     const langOption = new commander.Option('-l, --language <language>', 'Language')
     langOption.default('en')
     langOption.choices(langs)
@@ -77,9 +77,11 @@ const main = async () => {
 
           process.stdout.write(chalk.grey.bold(`[${publishedAt}]`))
           process.stdout.write('\r\n')
+
+          let description = article.description.replace('&eacute','').replace('&ndash','')
           entries.push({
             title: article.title,
-            description: article.description,
+            description: description,
             url: article.url
           })
           index++
@@ -119,7 +121,9 @@ const main = async () => {
         } else {
           console.log(chalk.green.bold(description))
         }
-        await open(entries[selected].url)
+        console.log()
+        let url = await TinyURL.shorten(entries[selected].url)
+        console.log( 'URL: ' + chalk.cyan.bold(url))
       }
 
       while (true) {
@@ -130,6 +134,7 @@ const main = async () => {
 
     await program.parseAsync(process.argv);
   } catch (error) {
+    console.dir(error)
     console.error(chalk.red.bold(error.message))
   }
 }

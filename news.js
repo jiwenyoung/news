@@ -60,7 +60,7 @@ const main = async () => {
       if (response.status === 'ok') {
         clear()
         console.log()
-        console.log(chalk.cyan.bold(`_ __   _____      _____ `))
+        console.log(chalk.cyan.bold(` _ __   ___ _      _ ___ `))
         console.log(chalk.cyan.bold(`| '_ \\ / _ \\ \\ /\\ / / __|`))
         console.log(chalk.cyan.bold(`| | | |  __/\\ V  V /\\__ \\`))
         console.log(chalk.cyan.bold(`|_| |_|\\___| \\_/\\_/ |___/`))

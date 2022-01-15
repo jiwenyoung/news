@@ -66,6 +66,16 @@ const main = async () => {
         console.log(chalk.cyan.bold(`|_| |_|\\___| \\_/\\_/ |___/`))
         console.log()
 
+        if(response.articles.length === 0){
+          if(keyword !== 'headlines'){
+            console.log(chalk.green.bold(`No news entries about ${keyword}`))
+          }else{
+            console.log(chalk.green.bold('No news entries'))
+          }
+          console.log()
+          process.exit(0)
+        }
+
         for (let article of response.articles) {
           process.stdout.write(`${chalk.cyan.bold(index)} ${chalk.green.bold(article.title)}  `)
 

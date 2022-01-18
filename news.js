@@ -88,7 +88,10 @@ const main = async () => {
           process.stdout.write(chalk.grey.bold(`[${publishedAt}]`))
           process.stdout.write('\r\n')
 
-          let description = article.description.replace('&eacute','').replace('&ndash','')
+          let description = ''
+          if(article.description){
+            description = article.description.replace('&eacute','').replace('&ndash','')
+          }
           entries.push({
             title: article.title,
             description: description,
@@ -144,7 +147,6 @@ const main = async () => {
 
     await program.parseAsync(process.argv);
   } catch (error) {
-    console.dir(error)
     console.error(chalk.red.bold(error.message))
   }
 }
